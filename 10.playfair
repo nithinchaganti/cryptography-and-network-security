@@ -1,0 +1,13 @@
+import math
+
+def playfair_keys():
+    num_letters = 25
+    num_rows = 5
+    total_ways = math.factorial(num_letters)
+    row_ways = math.factorial(num_rows)
+    matrix_ways = math.factorial(num_rows)
+    unique_keys = total_ways / (row_ways ** num_rows * matrix_ways)
+    power_of_2 = math.log(unique_keys, 2)
+    return power_of_2
+
+print("Approximate number of keys for the Playfair cipher: 2^{}".format(playfair_keys()))
