@@ -1,0 +1,36 @@
+playfair_matrix = [
+    "M F H I/J K",
+    "U N O P Q",
+    "Z V W X Y",
+    "E L A R G",
+    "D S T B C"
+]
+def find_position(matrix, char):
+    for i, row in enumerate(matrix):
+        if char in row:
+            return (i, row.index(char))
+    return None
+
+
+def playfair_encrypt(matrix, message):
+    message = message.replace(" ", "").upper()
+    message = message.replace("J", "I")
+    if len(message) % 2 == 1:
+        message += "X"
+    pairs = [message[i:i+2] for i in range(0, len(message), 2)]
+    ciphertext = ""
+    for pair in pairs:
+        row1, col1 = find_position(matrix, pair[0])
+        row2, col2 = find_position(matrix, pair[1])
+    
+        if row1 == row2:
+            ciphertext += matrix[row1][(col1+1)%5] + matrix[row2][(col2+1)%5]
+        elif col1 == col2:
+            ciphertext += matrix[(row1+1)%5][col1] + matrix[(row2+1)%5][col2]
+        else:
+            ciphertext += matrix[row1][col2] + matrix[row2][col1]
+    return ciphertext
+
+message = "Must see you over Cadogan West. Coming at once."
+ciphertext = playfair_encrypt(playfair_matrix, message)
+print(ciphertext)
