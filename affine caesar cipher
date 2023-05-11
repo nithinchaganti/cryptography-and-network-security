@@ -1,0 +1,9 @@
+def is_allowed_a(a):
+    return math.gcd(a, 26) == 1
+import math
+
+for a in range(26):
+    if is_allowed_a(a):
+        print(f"a = {a} is allowed")
+    else:
+        print(f"a = {a} is not allowed")
