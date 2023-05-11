@@ -1,0 +1,26 @@
+input_string = "saveetha"
+
+frequency_table = {}
+for char in input_string:
+    if char in frequency_table:
+        frequency_table[char] += 1
+    else:
+        frequency_table[char] = 1
+
+most_frequent_char = ''
+second_most_frequent_char = ''
+max_frequency = 0
+second_max_frequency = 0
+for char in frequency_table:
+    frequency = frequency_table[char]
+    if frequency > max_frequency:
+        second_max_frequency = max_frequency
+        second_most_frequent_char = most_frequent_char
+        max_frequency = frequency
+        most_frequent_char = char
+    elif frequency > second_max_frequency:
+        second_max_frequency = frequency
+        second_most_frequent_char = char
+
+print("The most frequent character is '{}'".format(most_frequent_char))
+print("The second most frequent character is '{}'".format(second_most_frequent_char))
