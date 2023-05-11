@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+int main()
+{
+    char ciphertext[] = "53‡‡†305))6*;4826)4‡.)4‡);806*;48†8¶60))85;;]8*;:‡8†83 (88)5†;46(;88*96*?;8)‡(;485);5†2:‡(;4956*2(5—4)8¶8*;4069285);)6†8)4‡‡;1(‡9;48081;8:8‡1;48†85;4)485†528806*81 (‡9;48;(88;4(‡?34;48)4‡;161;:188;‡?;";
+    int freq[128] = {0};
+    int i, j;
+
+    // Step 1: Determine the character that decodes to 'e'
+    for(i=0; ciphertext[i]!='\0'; i++)
+    {
+        freq[ciphertext[i]]++;
+    }
+
+    int max_freq = 0;
+    char most_freq_char;
+    for(i=0; i<128; i++)
+    {
+        if(freq[i] > max_freq)
+        {
+            max_freq = freq[i];
+            most_freq_char = i;
+        }
+    }
+
+    char e = most_freq_char ^ ' ';
+    printf("The character that decodes to 'e' is: %c\n", e);
+
+    // Step 2: Determine the characters that stand for 't' and 'h'
+    char t, h;
+    for(i=0; ciphertext[i]!='\0'; i++)
+    {
+        if(ciphertext[i] == e)
+        {
+            if(ciphertext[i-1] == 't' || ciphertext[i+1] == 't')
+            {
+                t = ciphertext[i-1] ^ ' ';
+                printf("The character that decodes to 't' is: %c\n", t);
+            }
+            if(ciphertext[i-1] == 'h' || ciphertext[i+1] == 'h')
+            {
+                h = ciphertext[i-1] ^ ' ';
+                printf("The character that decodes to 'h' is: %c\n", h);
+            }
+        }
+    }
+
+    // Step 3: Decipher the rest of the message
+    printf("\nThe decrypted message is: ");
+    for(i=0; ciphertext[i]!='\0'; i++)
+    {
+        if(ciphertext[i] == t || ciphertext[i] == h || ciphertext[i] == e)
+        {
+            printf("%c", ciphertext[i] ^ ' ');
+        }
+        else
+        {
+            printf("%c", ciphertext[i]);
+        }
+    }
+
+    return 0;
+}
