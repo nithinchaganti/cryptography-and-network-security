@@ -1,0 +1,26 @@
+def generate_cipher(keyword):
+    keyword_set = set(keyword)
+    unused_letters = ''.join([chr(i) for i in range(ord('a'), ord('z')+1) if chr(i) not in keyword_set])
+    cipher_sequence = keyword + unused_letters
+    cipher_dict = dict(zip('abcdefghijklmnopqrstuvwxyz', cipher_sequence))
+    return cipher_dict
+
+def encrypt(message, cipher_dict):
+    encrypted_message = ''.join([cipher_dict.get(c, c) for c in message])
+    return encrypted_message
+
+def decrypt(message, cipher_dict):
+    reverse_cipher_dict = {v: k for k, v in cipher_dict.items()}
+    decrypted_message = ''.join([reverse_cipher_dict.get(c, c) for c in message])
+    return decrypted_message
+
+keyword = 'CIPHER'
+cipher_dict = generate_cipher(keyword)
+print(cipher_dict)
+
+message = 'saveetha school of engineering'
+encrypted_message = encrypt(message, cipher_dict)
+print(encrypted_message)
+
+decrypted_message = decrypt(encrypted_message, cipher_dict)
+print(decrypted_message)
