@@ -1,0 +1,28 @@
+import numpy as np
+key = np.array([[9, 4], [5, 7]])
+
+def str_to_matrix(s):
+    num_list = [ord(c)-ord('a') for c in s.lower() if c.isalpha()]
+    num_list.append(26) 
+
+    while len(num_list) % 2 != 0:
+        num_list.append(0)
+    return np.array(num_list).reshape(-1, 2)
+def matrix_to_str(m):
+    num_list = m.flatten().tolist()[:-1] 
+    return ''.join([chr(num+ord('a')) for num in num_list])
+
+def encrypt_matrix(m, key):
+    return np.matmul(m, key) % 26
+
+def encrypt(s, key):
+    m = str_to_matrix(s)
+    
+    encrypted_m = encrypt_matrix(m, key)
+    encrypted_s = matrix_to_str(encrypted_m)
+    
+    return encrypted_s
+
+message = "meet me at the usual place at ten rather than eight oclock"
+encrypted_message = encrypt(message, key)
+print(encrypted_message)
